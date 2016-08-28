@@ -1,4 +1,4 @@
-# queueman-being
+# Queueman Being
 
 A [re-frame](https://github.com/Day8/re-frame) application.
 
@@ -22,8 +22,7 @@ Press `q` in rapid succession to queue that move into your move-queue up to five
 
 Let the move take control...you get the idea.
 
-Zen Queuedhism 
-> You cannot control what move appears to you, only how many of it you queue.
+> You cannot control what move appears to you, only how many of it you queue. ~ Zen Queuedhism
 
 ## Development Mode
 
