@@ -3,10 +3,23 @@
 
 (def x 0)
 
-(defn main-panel []
-  (let [name (re-frame/subscribe [:name])]
+(defn select-box []
+  (let [next-symbol (re-frame/subscribe [:symbol])]
     (fn []
       [:div
-       [:div "Hello from " @name]
-       [:div "This is Dan's code"]
-       [:button "Press me!"]])))
+       [:div "Current Queue:"]
+       [:div {:style {:border "5px solid black"
+                      :height "50px"
+                      :width "50px"
+                      :font-size "xx-large"
+                      :text-align "center"}}
+        @next-symbol]
+       [:div "Time left: " 5000]])))
+
+(defn main-panel []
+  (fn []
+    [:div
+     [select-box]
+     [:div {:style {:border "5px solid black"
+                    :height "500px"
+                    :width "500px"}} ""]]))
