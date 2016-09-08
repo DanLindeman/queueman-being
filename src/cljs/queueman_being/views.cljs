@@ -3,6 +3,12 @@
 
 (def x 0)
 
+(defn time-remaining []
+  (let [timeout (re-frame/subscribe [:timeout])]
+    (fn []
+      [:progress {:value @timeout
+                  :max 5000}]))) ;; Shouldn't be hardcoded
+
 (defn select-box []
   (let [next-symbol (re-frame/subscribe [:symbol])]
     (fn []
@@ -14,7 +20,7 @@
                       :font-size "xx-large"
                       :text-align "center"}}
         @next-symbol]
-       [:div "Time left: " 5000]])))
+       [time-remaining]])))
 
 (defn main-panel []
   (fn []

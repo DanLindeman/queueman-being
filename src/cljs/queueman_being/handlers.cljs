@@ -3,6 +3,8 @@
               [queueman-being.db :as db]
               [queueman-being.directions :refer [get-next-symbol]]))
 
+(def timeout-step 50)
+
 (re-frame/reg-event-db
  :initialize-db
  (fn  [_ _]
@@ -22,12 +24,23 @@
  (fn  [db _]
    (if-not (:timeout db)
      (let [timeout 5000]
-       (js/setTimeout #(re-frame/dispatch [:queue-timeout]) timeout)
+       (js/setTimeout #(re-frame/dispatch [:decrement-timeout]) timeout-step)
        (assoc db :timeout timeout))
      db)))
 
 (re-frame/reg-event-db
- :queue-timeout
+ :decrement-timeout
+ (fn  [db _]
+   (let [timeout (:timeout db)
+         new-timeout (max (- timeout timeout-step) 0)]
+     (if (= new-timeout 0)
+       (re-frame/dispatch [:stop-timeout])
+       (js/setTimeout #(re-frame/dispatch [:decrement-timeout]) timeout-step))
+     (assoc db :timeout new-timeout))))
+
+
+(re-frame/reg-event-db
+ :stop-timeout
  (fn  [db _]
    (js/console.log (str (:symbol-queue db)))
    (-> db

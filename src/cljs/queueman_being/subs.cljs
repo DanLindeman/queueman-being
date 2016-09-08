@@ -11,3 +11,8 @@
  :symbol
  (fn [db]
    (:symbol db)))
+
+(re-frame/reg-sub
+ :timeout
+ (fn [db]
+   (:timeout db)))
